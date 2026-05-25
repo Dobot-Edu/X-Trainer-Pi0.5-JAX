@@ -540,10 +540,9 @@ OpenPI 的 `XTrainerInputs` 期望 camera key 为 `top`、`left_wrist`、`right_
 建议使用：
 
 ```bash
-python scripts/convert_raw_to_lerobot_2_1.py \
+python examples/xtrainer_real/convert_raw_to_lerobot_2_1.py \
   --raw_root "$RAW_ROOT" \
   --output_root "$OUTPUT_ROOT" \
-  --repo_id "$REPO_ID" \
   --task "$TASK" \
   --fps 30 \
   --use_videos \
@@ -569,33 +568,7 @@ Xtrainer-PI05-feat-xtrainer-finetune/examples/xtrainer_real/convert_xtrainer_raw
 
 转换脚本必须保证同一帧的 state、action、三路图像严格对齐。如果某一帧图像损坏或缺失，应整帧跳过，而不是只删除单路图像。
 
-### 7.6 转换后检查
 
-基础检查：
-
-```bash
-DATASET_ROOT=${HF_LEROBOT_HOME:-$HOME/.cache/huggingface/lerobot}/<repo_id>
-find "$DATASET_ROOT/meta" -maxdepth 1 -type f -print
-find "$DATASET_ROOT/data" -name "*.parquet" | head
-find "$DATASET_ROOT/videos" -name "*.mp4" | head
-```
-
-用 LeRobotDataset 加载检查：
-
-```bash
-cd /path/to/workspace/Xtrainer-PI05-feat-xtrainer-finetune
-
-HF_LEROBOT_HOME=/path/to/lerobot_cache uv run python -c "from lerobot.common.datasets.lerobot_dataset import LeRobotDataset; ds=LeRobotDataset('<your_hf_username>/<your_xtrainer_dataset>'); print(len(ds), ds.fps, ds.features); s=ds[0]; print(s['observation.state'].shape, s['action'].shape, sorted(s.keys()))"
-```
-
-必须确认：
-
-1. `observation.state` 为 14 维。
-2. `action` 为 14 维。
-3. 三路 camera key 与 OpenPI 配置一致。
-4. `fps` 与采集频率一致或接近。
-5. `task` 文本正确。
-6. 视频可以正常播放，没有黑屏、坏帧、左右相机互换。
 
 ---
 
@@ -686,9 +659,10 @@ cd /path/to/workspace/Xtrainer-PI05-feat-xtrainer-finetune
 HF_LEROBOT_HOME=/path/to/lerobot_cache \
 XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 \
 uv run scripts/compute_norm_stats.py \
+  --exp-name test1
   --config-name pi05_xtrainer_finetune \
   --data.repo-id <your_hf_username>/<your_xtrainer_dataset> \
-  --data.assets.asset-id xtrainer
+  --data.assets.asset-id xtrainer-custom
 ```
 
 如果项目使用本地 YAML 或其他本地配置覆盖方式，也可使用 handoff 中的形式：
@@ -811,7 +785,7 @@ XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 \
 uv run scripts/train.py \
   pi05_xtrainer_finetune \
   --data.repo-id <your_hf_username>/<your_xtrainer_dataset> \
-  --data.assets.asset-id xtrainer \
+  --data.assets.asset-id xtrainer-custom \
   --exp-name xtrainer_full_smoke \
   --batch-size 1 \
   --num-train-steps 50 \
@@ -834,9 +808,9 @@ XLA_PYTHON_CLIENT_MEM_FRACTION=0.95 \
 uv run scripts/train.py \
   pi05_xtrainer_finetune \
   --data.repo-id <your_hf_username>/<your_xtrainer_dataset> \
-  --data.assets.asset-id xtrainer \
+  --data.assets.asset-id xtrainer-custom \
   --exp-name xtrainer_full_<task>_<date> \
-  --batch-size 8 \
+  --batch-size 32 \
   --num-train-steps 20000 \
   --save-interval 1000 \
   --keep-period 5000 \
@@ -942,7 +916,7 @@ XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 \
 uv run scripts/train.py \
   pi05_xtrainer_lora_finetune \
   --data.repo-id <your_hf_username>/<your_xtrainer_dataset> \
-  --data.assets.asset-id xtrainer \
+  --data.assets.asset-id xtrainer-custom \
   --exp-name xtrainer_lora_smoke \
   --batch-size 4 \
   --num-train-steps 100 \
@@ -959,7 +933,7 @@ XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 \
 uv run scripts/train.py \
   pi05_xtrainer_lora_finetune \
   --data.repo-id <your_hf_username>/<your_xtrainer_dataset> \
-  --data.assets.asset-id xtrainer \
+  --data.assets.asset-id xtrainer-custom \
   --exp-name xtrainer_lora_<task>_<date> \
   --batch-size 8 \
   --num-train-steps 20000 \
@@ -977,7 +951,7 @@ XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 \
 uv run scripts/train.py \
   pi05_xtrainer_lora_r64_finetune \
   --data.repo-id <your_hf_username>/<your_xtrainer_dataset> \
-  --data.assets.asset-id xtrainer \
+  --data.assets.asset-id xtrainer-custom \
   --exp-name xtrainer_lora_r64_<task>_<date> \
   --batch-size 4 \
   --num-train-steps 20000 \
@@ -999,7 +973,7 @@ uv run python -c "from openpi.training import config; cfg=config.get_config('pi0
 1. `model` 中使用 LoRA variant。
 2. `freeze_filter` 冻结非 LoRA 参数。
 3. `ema_decay=None`，避免 LoRA 训练维护不必要的 EMA 状态。
-4. `data.assets.asset_id='xtrainer'`。
+4. `data.assets.asset_id='xtrainer-custom'(你计算的norm_stats)`。
 5. `repo_id` 指向转换后的 X-Trainer LeRobot dataset。
 
 ---
