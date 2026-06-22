@@ -9,8 +9,8 @@ from openpi_client import image_tools
 from openpi_client.runtime import environment as _environment
 from typing_extensions import override
 
-from examples.xtrainer_real.hardware.realsense_camera import RealSenseCamera
 from examples.atom_real.hardware import AtomUpperControl
+from examples.xtrainer_real.hardware.realsense_camera import RealSenseCamera
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +48,7 @@ class OpenCVCamera:
         self._capture = capture
         self._connected = True
 
-    def async_read(self, timeout_ms: int = 50) -> np.ndarray | None:  # noqa: ARG002
+    def async_read(self, timeout_ms: int = 50) -> np.ndarray | None:
         if not self._connected or self._capture is None:
             return None
 
@@ -69,7 +69,9 @@ class OpenCVCamera:
 def _pack_state(arm_state: np.ndarray, hand_state: np.ndarray, head_state: np.ndarray) -> np.ndarray:
     # Dataset/action order for Atom:
     # [left_arm(7), left_hand(6), right_arm(7), right_hand(6), head(2)]
-    return np.concatenate([arm_state[:7], hand_state[:6], arm_state[7:14], hand_state[6:12], head_state]).astype(np.float64)
+    return np.concatenate([arm_state[:7], hand_state[:6], arm_state[7:14], hand_state[6:12], head_state]).astype(
+        np.float64
+    )
 
 
 class AtomRealEnvironment(_environment.Environment):
@@ -110,8 +112,12 @@ class AtomRealEnvironment(_environment.Environment):
         else:
             raise ValueError("Either camera_top_id or camera_top_serial is required for Atom inference.")
 
-        self._cam_left = RealSenseCamera(camera_left_wrist_serial, fps=round(camera_fps)) if camera_left_wrist_serial else None
-        self._cam_right = RealSenseCamera(camera_right_wrist_serial, fps=round(camera_fps)) if camera_right_wrist_serial else None
+        self._cam_left = (
+            RealSenseCamera(camera_left_wrist_serial, fps=round(camera_fps)) if camera_left_wrist_serial else None
+        )
+        self._cam_right = (
+            RealSenseCamera(camera_right_wrist_serial, fps=round(camera_fps)) if camera_right_wrist_serial else None
+        )
 
         self._render_height = render_height
         self._render_width = render_width

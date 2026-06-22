@@ -6,7 +6,6 @@ import numpy as np
 
 from openpi import transforms
 
-
 ATOM_STATE_DIM = 28
 
 
@@ -93,7 +92,9 @@ class AtomInputs(transforms.DataTransformFn):
                 images[camera_name] = data[key]
         return images
 
-    def _optional_image(self, images: dict[str, np.ndarray], name: str, base_image: np.ndarray) -> tuple[np.ndarray, np.bool_]:
+    def _optional_image(
+        self, images: dict[str, np.ndarray], name: str, base_image: np.ndarray
+    ) -> tuple[np.ndarray, np.bool_]:
         if name not in images:
             return np.zeros_like(base_image), np.False_
         return _parse_image(images[name]), np.True_

@@ -16,11 +16,11 @@ from __future__ import annotations
 
 import argparse
 import io
+from pathlib import Path
 import pickle
 import shutil
 import sys
 import tempfile
-from pathlib import Path
 
 import h5py
 import numpy as np

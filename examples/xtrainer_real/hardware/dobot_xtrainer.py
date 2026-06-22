@@ -269,7 +269,9 @@ class DobotXTrainer:
                     if 1.85 < abs(pi_ratio) < 2.15:
                         goal_rad[joint_index] = goal_rad[joint_index] - 2 * np.pi * np.sign(pi_ratio)
                     else:
-                        raise RuntimeError(f"Action jump too large on joint {joint_index}: delta={abs_delta[joint_index]:.3f}rad")
+                        raise RuntimeError(
+                            f"Action jump too large on joint {joint_index}: delta={abs_delta[joint_index]:.3f}rad"
+                        )
         self._last_action_rad = goal_rad.copy()
 
         goal_deg = [float(np.rad2deg(value)) for value in goal_rad]

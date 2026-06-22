@@ -731,7 +731,9 @@ _CONFIGS = [
             assets=AssetsConfig(asset_id="xtrainer"),
             base_config=DataConfig(prompt_from_task=True),
         ),
-        weight_loader=weight_loaders.CheckpointWeightLoader("/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"),
+        weight_loader=weight_loaders.CheckpointWeightLoader(
+            "/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"
+        ),
         num_train_steps=20_000,
         batch_size=32,
         policy_metadata={
@@ -765,7 +767,9 @@ _CONFIGS = [
             assets=AssetsConfig(asset_id="xtrainer"),
             base_config=DataConfig(prompt_from_task=True),
         ),
-        weight_loader=weight_loaders.CheckpointWeightLoader("/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"),
+        weight_loader=weight_loaders.CheckpointWeightLoader(
+            "/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"
+        ),
         num_train_steps=20_000,
         batch_size=8,
         # Strict LoRA fine-tuning: freeze all non-LoRA params.
@@ -804,7 +808,9 @@ _CONFIGS = [
             assets=AssetsConfig(asset_id="xtrainer"),
             base_config=DataConfig(prompt_from_task=True),
         ),
-        weight_loader=weight_loaders.CheckpointWeightLoader("/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"),
+        weight_loader=weight_loaders.CheckpointWeightLoader(
+            "/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"
+        ),
         num_train_steps=40_000,
         batch_size=8,
         freeze_filter=nnx.All(nnx.Param, nnx.Not(nnx_utils.PathRegex(".*lora.*"))),
@@ -878,7 +884,9 @@ _CONFIGS = [
             assets=AssetsConfig(asset_id="atom"),
             base_config=DataConfig(prompt_from_task=True),
         ),
-        weight_loader=weight_loaders.CheckpointWeightLoader("/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"),
+        weight_loader=weight_loaders.CheckpointWeightLoader(
+            "/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"
+        ),
         num_train_steps=20_000,
         batch_size=32,
     ),
@@ -894,7 +902,9 @@ _CONFIGS = [
             assets=AssetsConfig(asset_id="atom"),
             base_config=DataConfig(prompt_from_task=True),
         ),
-        weight_loader=weight_loaders.CheckpointWeightLoader("/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"),
+        weight_loader=weight_loaders.CheckpointWeightLoader(
+            "/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"
+        ),
         num_train_steps=20_000,
         batch_size=8,
         freeze_filter=nnx.All(nnx.Param, nnx.Not(nnx_utils.PathRegex(".*lora.*"))),
@@ -912,7 +922,9 @@ _CONFIGS = [
             assets=AssetsConfig(asset_id="atom"),
             base_config=DataConfig(prompt_from_task=True),
         ),
-        weight_loader=weight_loaders.CheckpointWeightLoader("/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"),
+        weight_loader=weight_loaders.CheckpointWeightLoader(
+            "/home/dobot/gbw/openpi-assets/checkpoints/pi05_base/params"
+        ),
         num_train_steps=40_000,
         batch_size=8,
         freeze_filter=nnx.All(nnx.Param, nnx.Not(nnx_utils.PathRegex(".*lora.*"))),

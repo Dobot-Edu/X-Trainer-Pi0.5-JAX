@@ -141,9 +141,7 @@ def _patch_lerobot_dataset_hf_loader_for_list_feature() -> None:
             if "Feature type 'List' not found" not in str(err):
                 raise
 
-        logging.warning(
-            "Falling back to explicit parquet feature schema for dataset %s", self.repo_id
-        )
+        logging.warning("Falling back to explicit parquet feature schema for dataset %s", self.repo_id)
         try:
             import datasets as hf_datasets
             import pyarrow.parquet as pq

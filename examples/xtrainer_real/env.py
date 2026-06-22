@@ -121,7 +121,9 @@ class XTrainerRealEnvironment(_environment.Environment):
         }
         for camera_name in ("top", "left_wrist", "right_wrist"):
             frame = self._read_camera_frame(camera_name)
-            frame = image_tools.convert_to_uint8(image_tools.resize_with_pad(frame, self._render_height, self._render_width))
+            frame = image_tools.convert_to_uint8(
+                image_tools.resize_with_pad(frame, self._render_height, self._render_width)
+            )
             observation[f"observation.images.{camera_name}"] = frame
 
         if self._prompt is not None:

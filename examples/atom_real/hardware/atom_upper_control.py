@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import numpy as np
 import time
+
+import numpy as np
 
 from examples.atom_real.hardware.robot_control_dds import Control_sim
 
@@ -16,7 +17,11 @@ class AtomUpperControl:
     def wait_until_ready(self, timeout_s: float = 3.0) -> bool:
         deadline = time.time() + max(float(timeout_s), 0.1)
         while time.time() < deadline:
-            if self.robot.upper_msg is not None and self.robot.hand_msg is not None and self.robot.main_state_msg is not None:
+            if (
+                self.robot.upper_msg is not None
+                and self.robot.hand_msg is not None
+                and self.robot.main_state_msg is not None
+            ):
                 return True
             time.sleep(0.02)
         return False

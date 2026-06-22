@@ -25,11 +25,11 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 import pickle
 import shutil
 import subprocess
 import sys
-from pathlib import Path
 
 import cv2
 import datasets
@@ -38,17 +38,20 @@ from PIL import Image
 
 try:
     # LeRobot >= 0.1.0
-    from lerobot.common.datasets.compute_stats import aggregate_stats, compute_episode_stats
-    from lerobot.common.datasets.utils import (
-        DEFAULT_FEATURES,
-        embed_images,
-        get_hf_features_from_features,
-        serialize_dict,
-    )
+    from lerobot.common.datasets.compute_stats import aggregate_stats
+    from lerobot.common.datasets.compute_stats import compute_episode_stats
+    from lerobot.common.datasets.utils import DEFAULT_FEATURES
+    from lerobot.common.datasets.utils import embed_images
+    from lerobot.common.datasets.utils import get_hf_features_from_features
+    from lerobot.common.datasets.utils import serialize_dict
 except ModuleNotFoundError:
     # Backward compatibility for older LeRobot releases.
-    from lerobot.datasets.compute_stats import aggregate_stats, compute_episode_stats
-    from lerobot.datasets.utils import DEFAULT_FEATURES, embed_images, get_hf_features_from_features, serialize_dict
+    from lerobot.datasets.compute_stats import aggregate_stats
+    from lerobot.datasets.compute_stats import compute_episode_stats
+    from lerobot.datasets.utils import DEFAULT_FEATURES
+    from lerobot.datasets.utils import embed_images
+    from lerobot.datasets.utils import get_hf_features_from_features
+    from lerobot.datasets.utils import serialize_dict
 
 CODEBASE_VERSION = "v2.1"
 CHUNK_SIZE = 1000
@@ -315,9 +318,9 @@ def _encode_video_once(
     )
     cmd = [sys.executable, "-c", child_code, str(imgs_dir), str(video_path), str(fps), vcodec]
     if quiet_encoder:
-        completed = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        completed = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
     else:
-        completed = subprocess.run(cmd)
+        completed = subprocess.run(cmd, check=False)
 
     if completed.returncode == 0:
         return True, ""
@@ -379,8 +382,7 @@ def convert(args: argparse.Namespace) -> None:
             shutil.rmtree(output_root)
         else:
             raise FileExistsError(
-                f"output_root already exists and is not empty: {output_root}. "
-                "Use --overwrite_output to replace it."
+                f"output_root already exists and is not empty: {output_root}. " "Use --overwrite_output to replace it."
             )
     output_root.mkdir(parents=True, exist_ok=True)
 
