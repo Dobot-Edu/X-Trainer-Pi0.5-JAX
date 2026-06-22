@@ -1,0 +1,110 @@
+[
+    {
+        "index": 12,
+        "name": "torso_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 13,
+        "name": "left_shoulder_pitch_joint",
+        "kp": 300,
+        "kd": 15
+    },
+    {
+        "index": 14,
+        "name": "left_shoulder_roll_joint",
+        "kp": 300,
+        "kd": 15
+    },
+    {
+        "index": 15,
+        "name": "left_shoulder_yaw_joint",
+        "kp": 300,
+        "kd": 15
+    },
+    {
+        "index": 16,
+        "name": "left_elbow_pitch_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 17,
+        "name": "left_elbow_roll_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 18,
+        "name": "left_wrist_pitch_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 19,
+        "name": "left_wrist_yaw_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 20,
+        "name": "right_shoulder_pitch_joint",
+        "kp": 300,
+        "kd": 15
+    },
+    {
+        "index": 21,
+        "name": "right_shoulder_roll_joint",
+        "kp": 300,
+        "kd": 15
+    },
+    {
+        "index": 22,
+        "name": "right_shoulder_yaw_joint",
+        "kp": 300,
+        "kd": 15
+    },
+    {
+        "index": 23,
+        "name": "right_elbow_pitch_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 24,
+        "name": "right_elbow_roll_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 25,
+        "name": "right_wrist_pitch_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 26,
+        "name": "right_wrist_yaw_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 27,
+        "name": "head_yaw_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 28,
+        "name": "head_pitch_joint",
+        "kp": 200,
+        "kd": 8
+    },
+    {
+        "index": 29,
+        "name": "joint20",
+        "kp": 0,
+        "kd": 0
+    }
+]

@@ -1,0 +1,5 @@
+openpi-client
+numpy
+tyro
+pyrealsense2
+pyserial

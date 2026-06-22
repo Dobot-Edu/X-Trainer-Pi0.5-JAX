@@ -1,0 +1,7 @@
+openpi-client
+numpy
+opencv-python
+tyro
+pyrealsense2
+h5py
+Pillow

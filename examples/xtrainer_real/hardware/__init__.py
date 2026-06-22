@@ -1,0 +1,2 @@
+from examples.xtrainer_real.hardware.dobot_xtrainer import DobotXTrainer
+from examples.xtrainer_real.hardware.dobot_xtrainer import JOINT_NAMES
